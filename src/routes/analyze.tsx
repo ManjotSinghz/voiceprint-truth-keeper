@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Loader2, Mic, Square, Upload } from "lucide-react";
+import { Loader2, Mic, PhoneCall, Square, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/AppShell";
+import { CallSimulation } from "@/components/CallSimulation";
+import { IncidentReport } from "@/components/IncidentReport";
 import { ResultCard } from "@/components/ResultCard";
+import { TrustedProfiles } from "@/components/TrustedProfiles";
 import { extractPeaks, Waveform } from "@/components/Waveform";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

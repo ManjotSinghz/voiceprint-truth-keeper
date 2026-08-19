@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyzeRouteImport } from './routes/analyze'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as ScamPatternsRouteImport } from './routes/scam-patterns'
 import { Route as SettingsRouteImport } from './routes/settings'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +36,11 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScamPatternsRoute = ScamPatternsRouteImport.update({
+  id: '/scam-patterns',
+  path: '/scam-patterns',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/analyze': typeof AnalyzeRoute
   '/history': typeof HistoryRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/scam-patterns': typeof ScamPatternsRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/analyze': typeof AnalyzeRoute
   '/history': typeof HistoryRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/scam-patterns': typeof ScamPatternsRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
@@ -61,14 +69,34 @@ export interface FileRoutesById {
   '/analyze': typeof AnalyzeRoute
   '/history': typeof HistoryRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/scam-patterns': typeof ScamPatternsRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/analyze' | '/history' | '/how-it-works' | '/settings'
+  fullPaths:
+    | '/'
+    | '/analyze'
+    | '/history'
+    | '/how-it-works'
+    | '/scam-patterns'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analyze' | '/history' | '/how-it-works' | '/settings'
-  id: '__root__' | '/' | '/analyze' | '/history' | '/how-it-works' | '/settings'
+  to:
+    | '/'
+    | '/analyze'
+    | '/history'
+    | '/how-it-works'
+    | '/scam-patterns'
+    | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/analyze'
+    | '/history'
+    | '/how-it-works'
+    | '/scam-patterns'
+    | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +104,7 @@ export interface RootRouteChildren {
   AnalyzeRoute: typeof AnalyzeRoute
   HistoryRoute: typeof HistoryRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  ScamPatternsRoute: typeof ScamPatternsRoute
   SettingsRoute: typeof SettingsRoute
 }
 
@@ -109,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scam-patterns': {
+      id: '/scam-patterns'
+      path: '/scam-patterns'
+      fullPath: '/scam-patterns'
+      preLoaderRoute: typeof ScamPatternsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -124,6 +160,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyzeRoute: AnalyzeRoute,
   HistoryRoute: HistoryRoute,
   HowItWorksRoute: HowItWorksRoute,
+  ScamPatternsRoute: ScamPatternsRoute,
   SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport

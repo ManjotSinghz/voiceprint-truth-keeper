@@ -1,4 +1,5 @@
 import { AlertTriangle, CheckCircle2, ShieldAlert } from "lucide-react";
+import { ScoreBreakdown } from "@/components/ScoreBreakdown";
 import type { AnalysisResult } from "@/lib/classifier";
 
 const styles = {
@@ -68,6 +69,8 @@ export function ResultCard({ result }: { result: AnalysisResult }) {
           </div>
         ))}
       </div>
+
+      <ScoreBreakdown aiProbability={result.aiProbability} />
 
       <p className="mt-4 text-xs text-muted-foreground">
         Engine: {result.source === "backend" ? "connected backend model" : "mock demo classifier"}
