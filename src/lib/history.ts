@@ -5,10 +5,10 @@ export interface HistoryEntry {
   name: string;
   kind: "upload" | "mic";
   createdAt: string;
-  durationSec?: number;
+  durationSec?: number | undefined;
   aiProbability: number;
   verdict: Verdict;
-  topSignal?: string;
+  topSignal?: string | undefined;
   source: "mock" | "backend";
 }
 
@@ -26,7 +26,7 @@ export function loadHistory(): HistoryEntry[] {
 
 export function saveEntry(
   result: AnalysisResult,
-  meta: { name: string; kind: HistoryEntry["kind"]; durationSec?: number },
+  meta: { name: string; kind: HistoryEntry["kind"]; durationSec?: number | undefined },
 ): HistoryEntry {
   const entry: HistoryEntry = {
     id: crypto.randomUUID(),
