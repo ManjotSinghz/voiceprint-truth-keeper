@@ -1,14 +1,19 @@
 /**
  * Voice authenticity classifier.
  *
- * Right now this returns a MOCK result. When the real ML model (Flask/FastAPI)
- * is ready, set the backend endpoint URL in Settings — `analyzeAudio` will then
- * POST the audio file to `<endpoint>` as multipart/form-data and expect JSON:
+ * Local mode measures the audio for real (see `audio-features.ts`): pitch drift,
+ * high-band behaviour, loudness/pause rhythm and the noise floor. No randomness.
+ *
+ * When the real ML model (Flask/FastAPI) is ready, set the backend endpoint URL
+ * in Settings — `analyzeAudio` will then POST the audio file to `<endpoint>` as
+ * multipart/form-data and expect JSON:
  *
  *   { "aiProbability": 0.78, "signals": [{ "label": "...", "detail": "...", "weight": 0.4 }] }
  *
  * No other code needs to change.
  */
+
+import { extractFeatures, scoreFeatures, type FeatureScore } from "@/lib/audio-features";
 
 export type Verdict = "real" | "uncertain" | "ai";
 
@@ -23,7 +28,10 @@ export interface AnalysisResult {
   verdict: Verdict;
   signals: Signal[];
   source: "mock" | "backend";
+  /** Measured sub-scores powering the "Why this result?" panel (local mode only). */
+  breakdown?: FeatureScore[];
 }
+
 
 export const ENDPOINT_STORAGE_KEY = "voiceguard.endpoint";
 
