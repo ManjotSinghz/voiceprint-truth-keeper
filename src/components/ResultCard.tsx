@@ -70,11 +70,12 @@ export function ResultCard({ result }: { result: AnalysisResult }) {
         ))}
       </div>
 
-      <ScoreBreakdown aiProbability={result.aiProbability} />
+      <ScoreBreakdown aiProbability={result.aiProbability} breakdown={result.breakdown} />
 
       <p className="mt-4 text-xs text-muted-foreground">
-        Engine: {result.source === "backend" ? "connected backend model" : "mock demo classifier"}
+        Engine: {result.source === "backend" ? "connected backend model" : "on-device acoustic analysis"}
       </p>
+
     </div>
   );
 }
