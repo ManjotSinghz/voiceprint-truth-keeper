@@ -1,11 +1,19 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import type { FeatureScore } from "@/lib/audio-features";
 import { buildBreakdown } from "@/lib/breakdown";
 
-/** Expandable "Why this result?" explainability panel. Mock sub-scores for now. */
-export function ScoreBreakdown({ aiProbability }: { aiProbability: number }) {
+/** Expandable "Why this result?" panel. Uses measured sub-scores when available. */
+export function ScoreBreakdown({
+  aiProbability,
+  breakdown,
+}: {
+  aiProbability: number;
+  breakdown?: FeatureScore[];
+}) {
   const [open, setOpen] = useState(false);
-  const scores = buildBreakdown(aiProbability);
+  const scores = breakdown?.length ? breakdown : buildBreakdown(aiProbability);
+
 
   return (
     <div className="mt-5 rounded-lg border border-border bg-card/60">
