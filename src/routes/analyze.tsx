@@ -208,19 +208,30 @@ function AnalyzePage() {
           )}
         </div>
 
-        <div className="lg:pt-16">
+        <div className="space-y-6 lg:pt-16">
           {busy && (
             <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-6 text-sm text-muted-foreground">
               <Loader2 className="size-4 animate-spin text-primary" /> Analysing pitch, spectrum and
               prosody…
             </div>
           )}
-          {!busy && result && <ResultCard result={result} />}
+          {!busy && result && (
+            <div>
+              <ResultCard result={result} />
+              {result.verdict === "ai" && <IncidentReport result={result} clipName={clipName} />}
+            </div>
+          )}
           {!busy && !result && (
             <div className="rounded-xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
               Your result will appear here.
             </div>
           )}
+
+          <TrustedProfiles
+            currentClip={
+              result ? { name: clipName, aiProbability: result.aiProbability } : undefined
+            }
+          />
         </div>
       </div>
     </AppShell>
