@@ -130,6 +130,9 @@ function AnalyzePage() {
               <TabsTrigger value="mic" className="flex-1">
                 <Mic className="size-4" /> Live mic test
               </TabsTrigger>
+              <TabsTrigger value="call" className="flex-1">
+                <PhoneCall className="size-4" /> Simulate call
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="upload">
@@ -181,6 +184,10 @@ function AnalyzePage() {
                   )}
                 </Button>
               </div>
+            </TabsContent>
+
+            <TabsContent value="call">
+              <CallSimulation />
             </TabsContent>
           </Tabs>
 
