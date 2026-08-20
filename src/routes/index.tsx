@@ -92,6 +92,46 @@ function Landing() {
           </div>
         </div>
       </section>
+      {/* Community alert feed — static mock data for now. */}
+      <section className="mt-10 rounded-xl border border-border bg-card p-6">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Radio className="size-5 text-primary" />
+            <h2 className="text-lg font-semibold">Recent alerts</h2>
+          </div>
+          <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <span className="size-2 animate-pulse rounded-full bg-safe" /> live feed
+          </span>
+        </div>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Anonymised scam patterns flagged by other people using VoiceGuard.
+        </p>
+        <ul className="mt-4 divide-y divide-border">
+          {communityAlerts.map((a) => (
+            <li key={a.id} className="flex items-start justify-between gap-4 py-3">
+              <div className="min-w-0">
+                <p className="text-sm">
+                  A user in <span className="font-medium">{a.city}</span> flagged a{" "}
+                  {a.pattern.toLowerCase()}
+                </p>
+                <p className="text-xs text-muted-foreground">{a.agoHours} hours ago</p>
+              </div>
+              <span
+                className={`shrink-0 rounded-full border px-2 py-0.5 text-xs ${
+                  a.severity === "high"
+                    ? "border-danger/40 bg-danger/10 text-danger"
+                    : "border-caution/40 bg-caution/10 text-caution"
+                }`}
+              >
+                {a.severity} risk
+              </span>
+            </li>
+          ))}
+        </ul>
+        <Button asChild variant="outline" className="mt-4">
+          <Link to="/scam-patterns">See common scam patterns</Link>
+        </Button>
+      </section>
     </AppShell>
   );
 }
