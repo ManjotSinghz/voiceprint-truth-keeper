@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Activity, AudioLines, History, PhoneCall, ShieldCheck, Waves } from "lucide-react";
+import { Activity, AudioLines, History, PhoneCall, Radio, ShieldCheck, Waves } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
+import { communityAlerts } from "@/lib/alerts";
 
 export const Route = createFileRoute("/")({
   head: () => ({
