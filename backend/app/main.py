@@ -24,7 +24,6 @@ ALLOWED_CONTENT_TYPES = {
     "audio/mp4",
     "audio/m4a",
     "audio/webm",
-    "application/octet-stream",
 }
 
 
@@ -47,7 +46,7 @@ async def analyze_audio(file: UploadFile = File(...)):
     )
     supported_type = content_type in ALLOWED_CONTENT_TYPES
 
-    if not (supported_extension or supported_type):
+    if not supported_extension and not supported_type:
         raise HTTPException(
             status_code=415,
             detail="Unsupported audio format. Upload MP3, WAV, M4A, or WebM audio.",
