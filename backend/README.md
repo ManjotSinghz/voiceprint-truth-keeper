@@ -1,16 +1,19 @@
 # VoiceGuard API
 
-FastAPI service foundation for the VoiceGuard frontend.
+FastAPI backend for the VoiceGuard AI demonstration app.
 
-## Current status
+## Analysis mode
 
-- `GET /health`: implemented.
-- `POST /analyze`: validates an audio upload (MP3, WAV, M4A, or WebM; maximum 20 MB).
-- Model inference: **not implemented**. The endpoint returns HTTP 503 with
-  `MODEL_NOT_CONFIGURED` until a trained, evaluated model is integrated.
+The current implementation uses a deterministic, rule-based audio heuristic
+with librosa features (RMS variation, spectral-centroid variation, spectral
+flatness, and zero-crossing variation). It returns an `aiProbability`-shaped
+score so the existing frontend can display a result.
 
-This is intentional. The service must not invent an AI probability or imply that
-simple acoustic rules are a validated deepfake detector.
+**Important:** this is not a trained or validated AI voice detector. The score
+is an arbitrary demo heuristic, not a calibrated probability. It can classify
+real speech as synthetic and synthetic speech as real. Do not use it for
+security, identity verification, financial decisions, or other consequential
+decisions.
 
 ## Run locally
 
@@ -27,13 +30,24 @@ pip install -r backend/requirements.txt
 uvicorn backend.app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Open the interactive API docs at http://127.0.0.1:8000/docs.
+API docs: http://127.0.0.1:8000/docs
 
-## Before deployment
+## Tests
 
-1. Restrict CORS to the actual deployed frontend origin.
-2. Add request rate limiting and authentication if the API is exposed publicly.
-3. Add malware/content scanning and temporary-file cleanup if uploads are persisted.
-4. Integrate a trained model and evaluate it on held-out real and synthetic speech.
-5. Return calibrated probabilities only if calibration has been measured; otherwise
-   return a model score with clear limitations.
+From the repository root:
+
+```bash
+pytest backend/tests -q
+```
+
+The tests generate a small WAV signal in memory. They do not require a dataset
+or a trained model.
+
+## API response
+
+`POST /analyze` accepts multipart form data with the field name `file`.
+A successful response includes `aiProbability` (0..1), `signals`,
+`analysisMode: heuristic_demo`, a disclaimer, and clip duration.
+
+For production, replace the heuristic with a properly evaluated detector,
+restrict CORS to the deployed frontend, and add rate limiting and upload controls.
